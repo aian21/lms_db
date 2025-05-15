@@ -261,8 +261,6 @@ if (!empty($sweetAlertConfig)) {
   </form>
 </div>
 
-
-
 <script src="./bootstrap-5.3.3-dist/js/bootstrap.js"></script>
 <!-- Script for Address Selector -->
 <script src="ph-address-selector.js"></script>
@@ -364,6 +362,8 @@ function validateStep(step) {
           return false;
         }
       }
+
+
   
       function validateConfirmPassword(confirmPasswordInput) {
         const passwordInput = form.querySelector("input[name='password']");
@@ -384,6 +384,170 @@ function validateStep(step) {
     });
   </script>
 
+
+<script>
+$(document).ready(function(){
+    function toggleNextButton(isEnabled) {
+        $('#nextButton').prop('disabled', !isEnabled);
+    }
+
+    $('#email').on('input', function(){
+        var email = $(this).val();
+        if (email.length > 0) {
+            $.ajax({
+                url: 'AJAX/check_email.php',
+                method: 'POST',
+                data: { email: email },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.exists) {
+                        // Email is already taken
+                        $('#email').removeClass('is-valid').addClass('is-invalid');
+                        $('#emailFeedback').text('Email is already taken.').show();
+                        $('#email')[0].setCustomValidity('Email is already taken.');
+                        $('#email').siblings('.invalid-feedback').not('#emailFeedback').hide();
+
+                        if(response.exists && !usernameFeedback) {
+                         toggleNextButton(false); // ❌ Disable next button
+
+
+                        } else { 
+
+                                                  toggleNextButton(false); // ❌ Disable next button
+
+                        }
+
+
+
+
+
+                    } else {
+                        // Email is valid and available
+                        $('#email').removeClass('is-invalid').addClass('is-valid');
+                        $('#emailFeedback').text('').hide();
+                        $('#email')[0].setCustomValidity('');
+                        $('#email').siblings('.valid-feedback').show();
+                           if (emailFeedback && !usernameFeedback)  {
+
+                                                  toggleNextButton(false); // ❌ Disable next button
+                                                   
+
+
+                        } else {
+
+                                                                            toggleNextButton(true); // ❌ Disable next button
+
+                        }
+
+
+                                        }
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+        } else {
+            // Empty input reset
+            $('#email').removeClass('is-valid is-invalid');
+            $('#emailFeedback').text('').hide();
+            $('#email')[0].setCustomValidity('');
+            toggleNextButton(false); // ❌ Disable next button
+        }
+
+
+
+
+    });
+
+    $('#email').on('invalid', function() {
+        if ($('#email')[0].validity.valueMissing) {
+            $('#email')[0].setCustomValidity('Please enter a valid email.');
+            $('#emailFeedback').hide();
+            toggleNextButton(false); // ❌ Disable next button
+        }
+    });
+});
+</script>
+
+
+<script>
+$(document).ready(function(){
+    function toggleNextButton(isEnabled) {
+        $('#nextButton').prop('disabled', !isEnabled);
+    }
+
+    $('#username').on('input', function(){
+        var username = $(this).val();
+        if (username.length > 0) {
+            $.ajax({
+                url: 'AJAX/check_user.php',
+                method: 'POST',
+                data: { username: username },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.exists) {
+                        // Email is already taken
+                        $('#username').removeClass('is-valid').addClass('is-invalid');
+                        $('#usernameFeedback').text('Username is already taken.').show();
+                        $('#username')[0].setCustomValidity('User is already taken.');
+                        $('#username').siblings('.invalid-feedback').not('#usernameFeedback').hide();
+                        if(usernameFeedback && !emailFeedback) {
+                         toggleNextButton(false); // ❌ Disable next button
+
+
+                        } else { 
+
+                          toggleNextButton(false); // ❌ Disable next button
+
+                        }
+                        
+                    } else {
+                        // Email is valid and available
+                        $('#username').removeClass('is-invalid').addClass('is-valid');
+                        $('#usernameFeedback').text('').hide();
+                        $('#username')[0].setCustomValidity('');
+                        $('#username').siblings('.valid-feedback').show();
+                        if (!emailFeedback && usernameFeedback) {
+
+                           toggleNextButton(false); // ❌ Disable next button
+
+                                                
+
+                        } else {
+                          
+
+                           toggleNextButton(true); // ❌ Disable next button
+
+                        }
+                        
+
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+        } else {
+            // Empty input reset
+            $('#username').removeClass('is-valid is-invalid');
+            $('#usernameFeedback').text('').hide();
+            $('#username')[0].setCustomValidity('');
+            toggleNextButton(false); // ❌ Disable next button
+        }
+    });
+
+
+    
+
+    $('#username').on('invalid', function() {
+        if ($('#username')[0].validity.valueMissing) {
+            $('#username')[0].setCustomValidity('Please enter a valid user.');
+            $('#usernameFeedback').hide();
+            toggleNextButton(false); // ❌ Disable next button
+        }
+    });
+});
+</script>
 
   
   </body>
