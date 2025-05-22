@@ -1,5 +1,21 @@
 
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    // Check the user type
+   
+   header('Location: index.php');
 
+    exit();
+
+} elseif ($_SESSION['user_type'] === 0) {
+        // Admin user, redirect to admin homepage
+        header('Location: homepage.php');
+        exit();
+    }
+
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -10,6 +26,8 @@
   <title>Borrowers</title>
 </head>
 <body>
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Library Management System (Admin)</a>

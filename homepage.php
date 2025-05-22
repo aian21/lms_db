@@ -1,4 +1,20 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    // Check the user type
+   
+   header('Location: index.php');
 
+    exit();
+
+} elseif ($_SESSION['user_type'] === 1) {
+        // Admin user, redirect to admin homepage
+        header('Location: admin_homepage.php');
+        exit();
+    }
+
+
+?>
 
 
 

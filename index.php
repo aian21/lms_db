@@ -1,4 +1,18 @@
+<?php
+if (isset($_SESSION['user_id'])) {
+    // Check the user type
+    if ($_SESSION['user_type'] === 1) {
+        // Admin user, redirect to admin homepage
+        header('Location: admin_homepage.php');
+        exit();
+    } else {
+        // Regular user, redirect to the homepage
+        header('Location: homepage.php');
+        exit();
+    }
+}
 
+?>
 
 <?php
 session_start();
@@ -61,21 +75,7 @@ if (isset($_POST['login'])) {
 
 ?>
 
-<?php
-if (isset($_SESSION['user_id'])) {
-    // Check the user type
-    if ($_SESSION['user_type'] === 1) {
-        // Admin user, redirect to admin homepage
-        header('Location: admin_homepage.php');
-        exit();
-    } else {
-        // Regular user, redirect to the homepage
-        header('Location: homepage.php');
-        exit();
-    }
-}
 
-?>
 
 
 <!doctype html>
