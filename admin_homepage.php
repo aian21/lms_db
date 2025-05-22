@@ -1,26 +1,28 @@
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./bootstrap-5.3.3-dist/css/bootstrap.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!-- Correct Bootstrap Icons CSS -->
   <title>Borrowers</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Library Management System (Admin)</a>
-          <a class="btn btn-outline-light ms-auto" href="add_authors.html">Add Authors</a>
-          <a class="btn btn-outline-light ms-2" href="add_genres.html">Add Genres</a>
-          <a class="btn btn-outline-light ms-2" href="add_books.html">Add Books</a>
+          <a class="btn btn-outline-light ms-auto" href="add_authors.php">Add Authors</a>
+          <a class="btn btn-outline-light ms-2" href="add_genres.php">Add Genres</a>
+          <a class="btn btn-outline-light ms-2" href="add_books.php">Add Books</a>
           <div class="dropdown ms-2">
             <button class="btn btn-outline-light dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-person-circle"></i> <!-- Bootstrap icon -->
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
               <li>
-                  <a class="dropdown-item" href="profile.html">
+                  <a class="dropdown-item" href="profile.php">
                       <i class="bi bi-person-circle me-2"></i> See Profile Information
                   </a>
                 </li>
@@ -287,7 +289,6 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script> <!-- Add Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script> <!-- Correct Bootstrap JS -->
+
 </body>
 </html>

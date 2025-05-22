@@ -65,7 +65,90 @@ class database{
         }
  
     }
+
+ function loginUser($email, $password) {
+
+        $con = $this->opencon();
+        $stmt = $con->prepare("SELECT * FROM Users WHERE user_email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($user && password_verify($password, $user['user_password'])){
+
+            return $user;
+            
+
+        } else {
+
+            return false;
+        }
+        
+
+
+    }
  
+
+    function addAuthor($authorfirst, $authorlast, $authorbday, $authornat) {
+        $con = $this->opencon();
+
+
+           try {
+
+        $con->beginTransaction();
+
+        $stmt = $con->prepare("INSERT INTO authors (author_FN, author_LN, author_birthday, author_nat) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$authorfirst, $authorlast, $authorbday, $authornat]);
+        $auhtorID = $con->lastInsertId();
+
+        $con->commit();
  
+            return $auhtorID;
+
+           } catch (PDOException $e) {
+ 
+            $con->rollback();
+            return false;
+ 
+        }
+
+
+    }   
+
+
+    function addGenre($genreName) {
+ $con = $this->opencon();
+
+
+           try {
+
+        $con->beginTransaction();
+
+        $stmt = $con->prepare("INSERT INTO genres (genre_name) VALUES (?)");
+        $stmt->execute([$genreName]);
+        $genreID = $con->lastInsertId();
+
+        $con->commit();
+ 
+            return $genreID;
+
+           } catch (PDOException $e) {
+ 
+            $con->rollback();
+            return false;
+ 
+        }
+
+
+
+    }
+
+     function existingGenre($genreName) {
+        $con = $this->opencon();
+        $stmt = $con->prepare("SELECT COUNT(*) FROM Genres WHERE genre_name = ?");
+        $stmt->execute([$genreName]);
+
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+
+    }
 }
 ?>
