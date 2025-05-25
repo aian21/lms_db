@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
@@ -23,6 +22,8 @@ if (!isset($_SESSION['user_id'])) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./bootstrap-5.3.3-dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./poppers/css/bootstrap-icons.css"> <!-- Local Bootstrap Icons CSS -->
+
   <title>Borrowers</title>
 </head>
 <body>
@@ -307,6 +308,12 @@ if (!isset($_SESSION['user_id'])) {
     </div>
   </div>
 </div>
-
+<script src="poppers/js/popper.min.js"></script> <!-- Local Popper.js -->
+<script src="./bootstrap-5.3.3-dist/js/bootstrap.js"></script> <!-- Correct Bootstrap JS -->
+<script>
+function logout() {
+    window.location.href = 'logout.php';
+}
+</script>
 </body>
 </html>
