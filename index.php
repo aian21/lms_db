@@ -1,4 +1,9 @@
 <?php
+session_start();
+require_once('classes/database.php');
+$con = new database();
+
+// Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
     // Check the user type
     if ($_SESSION['user_type'] === 1) {
@@ -11,13 +16,6 @@ if (isset($_SESSION['user_id'])) {
         exit();
     }
 }
-
-?>
-
-<?php
-session_start();
-require_once('classes/database.php');
-$con = new database();
 
 $sweetAlertConfig = ""; // Initialize SweetAlert script variable
 
