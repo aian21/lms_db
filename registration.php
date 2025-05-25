@@ -70,9 +70,6 @@ if (isset($_POST['multisave'])) {
 
 ?>
 
-
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -387,8 +384,11 @@ function validateStep(step) {
 
 <script>
 $(document).ready(function(){
-    function toggleNextButton(isEnabled) {
-        $('#nextButton').prop('disabled', !isEnabled);
+    let emailValid = false;
+    let usernameValid = false;
+
+    function toggleNextButton() {
+        $('#nextButton').prop('disabled', !(emailValid && usernameValid));
     }
 
     $('#email').on('input', function(){
@@ -406,44 +406,21 @@ $(document).ready(function(){
                         $('#emailFeedback').text('Email is already taken.').show();
                         $('#email')[0].setCustomValidity('Email is already taken.');
                         $('#email').siblings('.invalid-feedback').not('#emailFeedback').hide();
-
-                        if(response.exists && !usernameFeedback) {
-                         toggleNextButton(false); // ❌ Disable next button
-
-
-                        } else { 
-
-                                                  toggleNextButton(false); // ❌ Disable next button
-
-                        }
-
-
-
-
-
+                        emailValid = false;
                     } else {
                         // Email is valid and available
                         $('#email').removeClass('is-invalid').addClass('is-valid');
                         $('#emailFeedback').text('').hide();
                         $('#email')[0].setCustomValidity('');
                         $('#email').siblings('.valid-feedback').show();
-                           if (emailFeedback && !usernameFeedback)  {
-
-                                                  toggleNextButton(false); // ❌ Disable next button
-                                                   
-
-
-                        } else {
-
-                                                                            toggleNextButton(true); // ❌ Disable next button
-
-                        }
-
-
-                                        }
+                        emailValid = true;
+                    }
+                    toggleNextButton();
                 },
                 error: function(xhr, status, error) {
                     alert('An error occurred: ' + error);
+                    emailValid = false;
+                    toggleNextButton();
                 }
             });
         } else {
@@ -451,30 +428,10 @@ $(document).ready(function(){
             $('#email').removeClass('is-valid is-invalid');
             $('#emailFeedback').text('').hide();
             $('#email')[0].setCustomValidity('');
-            toggleNextButton(false); // ❌ Disable next button
-        }
-
-
-
-
-    });
-
-    $('#email').on('invalid', function() {
-        if ($('#email')[0].validity.valueMissing) {
-            $('#email')[0].setCustomValidity('Please enter a valid email.');
-            $('#emailFeedback').hide();
-            toggleNextButton(false); // ❌ Disable next button
+            emailValid = false;
+            toggleNextButton();
         }
     });
-});
-</script>
-
-
-<script>
-$(document).ready(function(){
-    function toggleNextButton(isEnabled) {
-        $('#nextButton').prop('disabled', !isEnabled);
-    }
 
     $('#username').on('input', function(){
         var username = $(this).val();
@@ -486,45 +443,26 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(response) {
                     if (response.exists) {
-                        // Email is already taken
+                        // Username is already taken
                         $('#username').removeClass('is-valid').addClass('is-invalid');
                         $('#usernameFeedback').text('Username is already taken.').show();
-                        $('#username')[0].setCustomValidity('User is already taken.');
+                        $('#username')[0].setCustomValidity('Username is already taken.');
                         $('#username').siblings('.invalid-feedback').not('#usernameFeedback').hide();
-                        if(usernameFeedback && !emailFeedback) {
-                         toggleNextButton(false); // ❌ Disable next button
-
-
-                        } else { 
-
-                          toggleNextButton(false); // ❌ Disable next button
-
-                        }
-                        
+                        usernameValid = false;
                     } else {
-                        // Email is valid and available
+                        // Username is valid and available
                         $('#username').removeClass('is-invalid').addClass('is-valid');
                         $('#usernameFeedback').text('').hide();
                         $('#username')[0].setCustomValidity('');
                         $('#username').siblings('.valid-feedback').show();
-                        if (!emailFeedback && usernameFeedback) {
-
-                           toggleNextButton(false); // ❌ Disable next button
-
-                                                
-
-                        } else {
-                          
-
-                           toggleNextButton(true); // ❌ Disable next button
-
-                        }
-                        
-
+                        usernameValid = true;
                     }
+                    toggleNextButton();
                 },
                 error: function(xhr, status, error) {
                     alert('An error occurred: ' + error);
+                    usernameValid = false;
+                    toggleNextButton();
                 }
             });
         } else {
@@ -532,23 +470,14 @@ $(document).ready(function(){
             $('#username').removeClass('is-valid is-invalid');
             $('#usernameFeedback').text('').hide();
             $('#username')[0].setCustomValidity('');
-            toggleNextButton(false); // ❌ Disable next button
+            usernameValid = false;
+            toggleNextButton();
         }
     });
 
-
-    
-
-    $('#username').on('invalid', function() {
-        if ($('#username')[0].validity.valueMissing) {
-            $('#username')[0].setCustomValidity('Please enter a valid user.');
-            $('#usernameFeedback').hide();
-            toggleNextButton(false); // ❌ Disable next button
-        }
-    });
+    // Initial state
+    toggleNextButton();
 });
 </script>
-
-  
   </body>
   </html>
