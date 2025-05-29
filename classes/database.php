@@ -150,5 +150,90 @@ class database{
         return $count > 0;
 
     }
+
+    function viewAuthors(){
+        $con = $this->opencon();
+        return $con->query("SELECT * FROM Authors")->fetchAll();
+
+
+        
+    }
+
+        function viewAuthorsID($id): mixed
+        {
+            
+        $con = $this->opencon();
+        $stmt =  $con->prepare(query: "SELECT * FROM Authors WHERE author_id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(mode : PDO::FETCH_ASSOC);
+
+
+        
+    }
+    
+function updateAuthors($authorfirst, $authorlast, $authorbday,$authornat, $id) {
+    try {
+        $con = $this->opencon();
+        $con->beginTransaction();
+        $query = $con->prepare("UPDATE Authors SET author_FN=?, author_LN=?,author_birthday=?, author_nat=? WHERE author_id=?");
+        $query->execute([$authorfirst, $authorlast,$authorbday,$authornat, $id]);
+
+        // Update successful
+
+
+        $con->commit();
+        return true;
+
+    } catch (PDOException $e) {
+        // Handle the exception (e.g., log error, return false, etc.)
+         $con->rollBack();
+        return false; // Update failed
+    }
+}
+
+
+    function viewGenres(){
+        $con = $this->opencon();
+        return $con->query("SELECT * FROM Genres")->fetchAll();
+
+
+        
+    }
+
+
+function updateGenre($genreName, $id) {
+    try {
+        $con = $this->opencon();
+        $con->beginTransaction();
+        $query = $con->prepare("UPDATE Genres SET genre_name=? WHERE genre_id=?");
+        $query->execute([$genreName, $id]);
+
+        // Update successful
+
+
+        $con->commit();
+        return true;
+
+    } catch (PDOException $e) {
+        // Handle the exception (e.g., log error, return false, etc.)
+         $con->rollBack();
+        return false; // Update failed
+    }
+}
+
+
+  function viewGenreID($id): mixed
+        {
+            
+        $con = $this->opencon();
+        $stmt =  $con->prepare(query: "SELECT * FROM Genres WHERE genre_id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(mode : PDO::FETCH_ASSOC);
+
+
+        
+    }
+    
+
 }
 ?>
