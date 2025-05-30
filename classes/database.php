@@ -28,6 +28,7 @@ class database{
             $con->commit();
  
             return $userID;
+            
  
         } catch (PDOException $e) {
  
