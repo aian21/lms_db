@@ -98,7 +98,7 @@ if ($authorID){
         genreNameInput.classList.remove('is-valid');
         genreNameInput.classList.add('is-invalid');
         genreNameInput.nextElementSibling.textContent = 'Genre name is required.';
-        submitButton.disabled = true;
+        add.disabled = true;
         return;
       }
 
@@ -115,17 +115,17 @@ if ($authorID){
           genreNameInput.classList.remove('is-valid');
           genreNameInput.classList.add('is-invalid');
           genreNameInput.nextElementSibling.textContent = 'Genre already exists.';
-          submitButton.disabled = true;
+          add.disabled = true;
         } else {
           genreNameInput.classList.remove('is-invalid');
           genreNameInput.classList.add('is-valid');
           genreNameInput.nextElementSibling.textContent = '';
-          submitButton.disabled = false;
+          add.disabled = false;
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        submitButton.disabled = true;
+        add.disabled = true;
       });
     });
 
