@@ -6,6 +6,20 @@ $con = new database();
 
 $sweetAlertConfig = ""; // Initialize SweetAlert script variable
 
+
+if (!isset($_SESSION['user_id'])) {
+    // Check the user type
+   
+   header('Location: index.php');
+
+    exit();
+
+} elseif ($_SESSION['user_type'] === 0) {
+        // Admin user, redirect to admin homepage
+        header('Location: add_genres.php');
+        exit();
+    }
+
 if (isset($_POST['add'])) {
     $genreName = $_POST['genreName'];
 
